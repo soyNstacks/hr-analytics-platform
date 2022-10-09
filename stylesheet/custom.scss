@@ -1,0 +1,249 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$blueBg: #277BC0;
+$primary: #a3cef1;
+$highlight: #F8F9FA;
+$light: white;
+$mainOrange: #FFF4CF;
+
+$custom-theme-colors: map-merge($theme-colors, ("blueBg": $blueBg,
+            "mainOrange": $mainOrange,
+            "secondary": $secondary,
+            "primary": $primary,
+            "light": $light,
+            "highlight": $highlight));
+
+$theme-colors: map-merge($theme-colors, $custom-theme-colors);
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+body {
+    margin: 10px 5px 10px 5px;
+    font-size: 16px;
+    /* font-family:  */
+}
+
+.navbar li a {
+    color: $highlight  !important;
+}
+
+.navbar-toggler {
+    border-color: $primary  !important;
+}
+
+.nav-item:hover {
+    background-color: $light;
+    border-radius: 3px;
+}
+
+.nav-link {
+    color: $primary  !important;
+}
+
+.nav-link:hover {
+    color: #000 !important;
+}
+
+.card {
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 8px;
+}
+
+.card .btn {
+    border-radius: 20px !important;
+    border: 1px solid $highlight  !important;
+}
+
+.card .btn:hover {
+    background-color: #6ca8d9 !important;
+}
+
+#btn-save-wc,
+input[type=submit] {
+    border-radius: 10px !important;
+    border: 2px solid $secondary  !important;
+}
+
+#btn-save-wc {
+    bottom: 0;
+    left: 0;
+    float: right;
+    height: 10%
+}
+
+.btn-primary:hover,
+input[type=submit]:hover {
+    background-color: $secondary;
+    color: $highlight;
+}
+
+.grid-element-container {
+    position: relative;
+}
+
+/* content */
+.grid-child-element-content {
+    margin-top: auto;
+    padding: 15px 0px 15px 0px;
+    width: 100%;
+    height: 100%;
+    /* position: relative; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* mock space */
+    grid-template-rows: 250px 220px;
+    /* grid-template-rows: 50% 45%; */
+}
+
+.grid-child-element-content #graph-div {
+    margin: 0px 2px 5px 0px;
+    border: 1px solid black;
+    grid-row: 1/3;
+}
+
+.grid-child-element-content .statistic-div {
+    /* padding: 0px 0px 5px 5px; */
+    margin: 0px 0px 5px 2px;
+    border: 1px solid black;
+    grid-row: 1/3;
+    overflow: scroll;
+}
+
+.statistic-div .stats_ctables table {
+    border-collapse: collapse;
+    width: 95%;
+}
+
+.statistic-div .stats_ctables td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.statistic-div .stats_ctables th {
+    background-color: #e6e6e6;
+}
+
+.statistic-div .stats_ctables {
+    padding: 10px 5px 10px 5px;
+}
+
+.grid-child-element-content #table-div {
+    border: 1px solid black;
+    grid-column: 1/3;
+}
+
+#table-div table {
+    overflow-x: auto;
+    overflow-y: auto;
+    width: 100%;
+    caption-side: top;
+}
+
+.grid-child-element-content #table-div .table-fn {
+    margin: 5px 0px 10px 0px;
+}
+
+.grid-child-element-content #table-div .table-fn .export {
+    margin-left: 5px;
+    padding: 5px 10px 5px 10px;
+    background-color: rgb(121, 196, 142);
+    border-radius: 5px;
+    border: 1px solid rgb(86, 132, 40);
+    color: white;
+}
+
+/* footer */
+footer {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 20px;
+    background: rgb(156, 155, 155);
+    width: 100%;
+    position: relative;
+    clear: both;
+    bottom: 10px;
+    text-align: center;
+}
+
+.footer-grid-container {
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto;
+    display: grid;
+    margin: auto;
+    bottom: 5px;
+    clear: both;
+}
+
+.footer h1,
+.footer h2 {
+    font-size: 16px;
+}
+
+/* skills.html */
+#wordcloud-div {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#canvas_wordcloud {
+    margin: 0 auto;
+    padding: 0;
+    display: block;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 90%;
+    z-index: -1;
+}
+
+// graph form styling and animation
+#graphForm p {
+    opacity: 0
+}
+
+#graphForm p:nth-child(1) {
+    animation: change 1s ease-in-out forwards;
+}
+
+#graphForm p:nth-child(2) {
+    animation: change 1s ease-in-out forwards;
+    animation-delay: 1s;
+}
+
+#graphForm p:nth-child(3) {
+    animation: change 1s ease-in-out forwards;
+    animation-delay: 2s;
+}
+
+.form-select {
+    width: fit-content
+}
+
+.select-hidden {
+    animation: change 1s ease-in-out forwards;
+    display: none;
+    width: 50%;
+}
+
+.graph-option-div,
+#submit-button {
+    animation: change 1s ease-in-out forwards;
+    display: none;
+    opacity: 0
+}
+
+@keyframes change {
+    to {
+        opacity: 1
+    }
+}

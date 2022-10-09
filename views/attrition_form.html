@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%=title%> - Compensation
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/stylesheet/style.css" />
+        
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- checks for an error message, and passes it to javascript if one is recieved -->
+    <% if (locals.errorMessage) { %>
+        <script>
+            var errorMessage = '<%- errorMessage %>'
+        </script>
+    <% } %>
+</head>
+
+<body>
+    <div class="grid-element-container">
+        <div class="grid-child-element-menu">
+            <%- include('partials/navbar.ejs'); %>
+        </div>
+        <div class="container-fluid bg-light p-5">
+            <h1>Attrition</h1>
+            <br>
+            <br>
+            <form method="GET" id="graphForm" action="/attrition" autocomplete="off">
+
+                <p>Hi there! Welcome to Graphing Done Right's Graph Helper Tool.</p>
+                <p>Let's begin by selecting your graph data.</p>
+                <p>
+                    I want to analyse (y-axis):
+                    <select name="y_axis" id="y-axis" class="form-select" required>
+                        <!-- create inital select box value -->
+                        <option value="" disabled selected></option>
+                        <option value="number_of_resignations">Number of Resignations</option>
+                    </select>
+                </p>
+                <p id="x-axis-select" class="select-hidden">
+                    Sorted by (x-axis):
+                    <select name="x_axis" id="x-axis" class="form-select" required>
+                        <!-- create inital select box value -->
+                        <option value = "" disabled selected></option>
+                        <option value="resignation_reason">Resignation Reason</option>
+                        <option value="resignation_date">Resignation Date</option>
+                        <option value = "position">Position</option>
+                        <option value = "department">Department</option>
+                    </select>
+                </p>
+
+                <p id="date-mode" class="select-hidden">
+                    Great! Now select a date range:
+                    <br>
+                    <input type="radio" name = "date_mode" value = "date_range" class = "date-mode-option" id = "date-range" required>
+                    <label for="Line">Use a date range</label>
+                    <br>
+                    <input type="radio" name = "date_mode" value = "date_all" class = "date-mode-option" id = "date-all">
+                    <label for="Line">Select all records</label>
+                </p>
+                
+                <p id="date-select" class="select-hidden">
+                    Start date: <input name = "start_date" class = "date-input"  type="date" required> 
+                    End date: <input name = "end_date" class = "date-input"  type="date" required>
+                </p>
+
+                <p id = "graph-select" class="select-hidden">
+                    Almost done! Just select one of the recommended graph types:
+
+                    <div class = "graph-option-div" id="bar">
+                        <input type="radio" name="graph_type" value="Bar" id ="bar" class = "graph-option" required>
+                        <label for="Bar">Bar</label>
+                    </div>
+
+                    <div class = "graph-option-div" id="line">
+                        <input type="radio" name="graph_type" value="Line" class = "graph-option" id ="line">
+                        <label for="Line">Line</label>
+                    </div>
+
+                    <div class = "graph-option-div" id="pie">
+                        <input type="radio" name="graph_type" value="Pie" class = "graph-option" id ="pie">
+                        <label for="Pie">Pie</label>
+                    </div>
+
+                    <div class = "graph-option-div" id="scatter">
+                        <input type="radio" name="graph_type" value="Scatter" class = "graph-option" id ="scatter">
+                        <label for="Scatter">Scatter</label>
+                    </div>
+                    
+                </p>
+                    <input type="submit" class="btn btn-light" id="submit-button">
+            </form>
+
+            <script src="/script/forms/form_attrition.js"></script>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        <%- include('partials/footer.ejs'); %>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%> - Attrition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/stylesheet/style.css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"> </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jscharting.com/latest/jscharting.js"></script>
+    <script src="https://code.jscharting.com/latest/modules/toolbar.js"></script>
+    <script src="https://code.jscharting.com/latest/modules/types.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+    <!-- pass variables from express to js -->
+    <script>
+        var results = JSON.parse('<%- result %>')
+        var x_axis = '<%- x_axis %>'
+        var y_axis = '<%- y_axis %>'
+        var graph_type = '<%- graph_type %>'
+    </script>
+</head>
+
+<body>
+    <div class="grid-element-container bg-light">
+        <div class="grid-child-element-menu">
+            <%- include('partials/navbar.ejs'); %>
+        </div>
+
+        <div class="bg-light p-2">
+            <h1>Attrition</h1>
+        </div>
+
+        <div class="grid-child-element-content">
+            <div id="graph-div">
+                
+            </div>
+
+            <div class="statistic-div">
+                <h3 class="p-2">Analysis</h3>
+                <div id="stats_tableDropdown" class="p-2">
+                    <label for="stats-select">Top: </label>
+
+                    <br>
+
+                    <select id="stats-select"  class="form-select">
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="statsByReason" id="opt-reason"  style="display:none">Resignation Reasons</option>
+                        <option value="statsByDate" id="opt-date" style="display:none">Resignation Dates</option>
+                        <option value="statsByDept" id="opt-dept" style="display:none">Departments</option>
+                        <option value="statsByPos" id="opt-position" style="display:none">Positions</option>
+                    </select>
+                </div>
+
+                <div id="statsDiv_reason" class="stats_ctables" style="display:none">
+                    <h2>Top Resignation Reasons</h2>
+                    <table id="reason_table">
+                        <thead>
+                            <tr>
+                                <th>Reason</th>
+                                <th>Frequency (No. of times)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="statsDiv_date" class="stats_ctables" style="display:none">
+                    <h2>Top Resignations by Date</h2>
+                    <table id="date_table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Frequency (No. of times)</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="statsDiv_dept" class="stats_ctables" style="display:none">
+                    <h2>Top Resignations by Department</h2>
+                    <table id="dept_table">
+                        <thead>
+                            <tr>
+                                <th>Department</th>
+                                <th>Frequency (No. of times)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="statsDiv_pos" class="stats_ctables" style="display:none">
+                    <h2>Top Resignations by Position in Company</h2>
+                    <table id="pos_table">
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Frequency (No. of times)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="table-div">
+                <div class="table-fn">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          Export to:
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <button type="button" class="btn btn-success" onclick="export_to_spreadsheet('csv')">CSV</button>
+                            <button type="button" class="btn btn-danger" onclick="export_to_spreadsheet('xlsx')">XLSX</button>
+                        </ul>
+                    </div>
+                </div>
+
+                <table id="results-table">
+                    <% tableResult.forEach((row) => { %>
+                        <% date=JSON.stringify(row.resignation_date);%>
+                        <% row.resignation_date=date.slice(1, date.indexOf('T')); %>
+                    <% }) %>    
+                    <thead>
+                        <tr class="p-2">
+                            <th class="p-2">Name</th>
+                            <th class="p-2">Position</th>
+                            <th class="p-2">Department</th>
+                            <th class="p-2">Resignation Date</th>
+                            <th class="p-2">Resignation Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% tableResult.forEach((result) => { %>
+                            <tr class="p-2">
+                                <td class="p-2">
+                                    <%= result.name%>
+                                </td>
+                                <td class="p-2">
+                                    <%= result.position%>
+                                </td>
+                                <td class="p-2">
+                                    <%= result.department%>
+                                </td>
+                                <td class="p-2">
+                                    <%= result.resignation_date%>
+                                </td>
+                                <td class="p-2">
+                                    <%= result.resignation_reason%>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <%- include('partials/footer.ejs'); %>
+    </div>
+    <!-- scripts for table -->
+    <script src="script/libs/tablefilter/tablefilter.js"></script>
+    <script src="script/global/sortable_table.js"></script>
+    <!-- scripts for graph/wordcloud -->
+    <script src="/script/global/vis_functions.js"></script>
+    <script src="/script/global/graph_helpers.js"></script>
+    <script src="/script/charts/graph_attrition.js"></script>
+    <!-- script for analysis table -->
+    <script src="/script/analysis/attrition_analysis.js"></script>
+    <!-- script for export function -->
+    <script src="/script/global/export.js"></script>
+</body>
+
+</html>

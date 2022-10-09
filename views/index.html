@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8"/> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+		<title><%=title%></title>
+		<link rel="stylesheet" type="text/css" href="/stylesheet/style.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/stylesheet/style.css" />
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div class="grid-element-container">
+			<!--Navbar-->
+			<div class="grid-child-element-menu">
+				<%- include('partials/navbar.ejs'); %>
+			</div>
+			<!--Center Stuff-->
+			<section class="bg-light text-dark p-5 text-center">
+				<div class="container">
+					<h1 class="text-dark p-5">Welcome To Graphing Done Right (GDR)!</h1>
+					<p>GDR is a website application which allows you to link with your SQL database & generate graphs with the data currently present. <br>
+						Graphs can be produced in many different way, a few examples being Bar Graphs & Line Graphs.</p>
+				</div>
+			</section>
+			<!--Boxes-->
+			<section class="bg-light text-dark p-5 text-center">
+				<div class="container">
+					<div class="row">
+						<!--payments Card-->
+						<div class="col-md d-flex">
+							<div class="card bg-blueBg text-light" style="width: 18rem;">
+								<div class="card-body d-flex flex-column align-items-center">
+								  <h4 class="card-title">Payment</h5>
+								  <p class="card-text">Compare Payment Amount against different factors such as: <br> Employee, Payment Date, Payment Type, Position, or Department</p>
+								  <div class="mt-auto">
+									<a href="/payment_form" class="btn btn-primary mt-auto">Go To</a>
+								</div>
+								</div>
+							</div>
+						</div>
+						<!--Talent Skills Card-->
+						<div class="col-md d-flex">
+							<div class="card bg-blueBg text-light" style="width: 18rem;">
+								<div class="card-body d-flex flex-column align-items-center">
+								  <h4 class="card-title">Skills</h5>
+								  <p class="card-text">Choose to visualise different types of skills and skill count in a Graph or Wordcloud. <br></p>
+									<div class="mt-auto">
+										<a href="/skills_form" class="btn btn-primary mt-auto">Go To</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--Attrition Card-->
+						<div class="col-md d-flex">
+							<div class="card bg-blueBg text-light" style="width: 18rem;">
+								<div class="card-body d-flex flex-column align-items-center">
+									<h4 class="card-title">Attrition</h5>
+									<p class="card-text">Find out the Number of Resignations based on different factors such as: <br> Reason, Resignation Date, Position, or Department</p>
+									<div class="mt-auto">
+										<a href="/attrition_form" class="btn btn-primary mt-auto">Go To</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--Feedback Card-->
+						<div class="col-md d-flex">
+							<div class="card bg-blueBg text-light" style="width: 18rem;">
+								<div class="card-body d-flex flex-column align-items-center">
+								<h4 class="card-title">Demographics</h5>
+								<p class="card-text">Find out the demographics in the company with variables such as: <br> Age, Gender, and Race.</p>
+								<div class="mt-auto">
+									<a href="/demographics_form" class="btn btn-primary mt-auto">Go To</a>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		<br>
+		</div>
+		<!--Footer-->
+		<div class="footer">
+			<%- include('partials/footer.ejs'); %>
+		</div>
+	</body>
+
+</html>

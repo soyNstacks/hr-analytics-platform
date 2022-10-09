@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8"/> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+		<title><%=title%> - Skills</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/stylesheet/style.css" />
+		
+		<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+		<script src="https://code.jscharting.com/latest/jscharting.js"></script>
+		<script src="https://code.jscharting.com/latest/modules/toolbar.js"></script>
+		<script src="https://code.jscharting.com/latest/modules/types.js"></script>
+        
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.0.2/wordcloud2.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="/filesaver/FileSaver.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	
+		<script> 
+			var results = JSON.parse('<%- result %>')
+			var vis_option = '<%- vis_option %>'
+			
+			if (vis_option == "showWC") {
+				var wcCategory = '<%- wc_category %>'
+			}
+			else if (vis_option == "showGraph") {
+				var x_axis = '<%- x_axis %>'
+				var y_axis = '<%- y_axis %>'
+				var graph_type = '<%- graph_type %>'
+			}	
+        </script>
+
+	</head>
+	<body>
+		<div class="grid-element-container bg-light">
+			<div class="grid-child-element-menu">
+				<%- include('partials/navbar.ejs'); %>
+			</div>
+
+            <div class="bg-light p-2">
+				<h1>Skills</h1>
+			</div>
+
+			<div class ="grid-child-element-content">
+				<div id="graph-div">
+					<div id="wordcloud-div">
+						<canvas id="canvas_wordcloud" class="canvas"></canvas>
+                        <button id="btn-save-wc" class="btn btn-light help_tooltip"  data-bs-html="true" data-bs-placement="bottom" title="Save as Image" aria-hidden="true">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </button>
+					</div>
+				</div> 
+				<div class="statistic-div"> 
+					<h3 class="p-2">Analysis</h3>
+					<div id="stats_tableDropdown" class="p-2"> 
+						<label for="stats-select">Top: </label>
+						<br>
+
+						<select id="stats-select" class="form-select">
+                            <option value="" disabled selected>Select an option</option>
+							<option value="statsBySkills">Skills</option>
+							<option id ="hide_stats" value="hideAll">Hide Table</option>
+                        </select>
+					</div>
+					<div id="statsDiv_skills" style="display:none" class="stats_ctables">
+						<h2>Most Common Skills </h2>
+						<table id="skills_table">
+							<thead>
+								<tr>
+									<th>Top Skills</th>
+									<th>Number of Employees</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+
+						<br>
+
+						<p>* Up to top 10</p>
+					</div>
+				</div>
+				<div id="table-div">
+					<div class="table-fn">
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							  Export to:
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <button type="button" class="btn btn-success" onclick="export_to_spreadsheet('csv')">CSV</button>
+                                <button type="button" class="btn btn-danger" onclick="export_to_spreadsheet('xlsx')">XLSX</button>
+							</ul>
+						</div>
+					</div>
+					<table id="results-table">
+                        <thead>
+                            <tr>
+                                <th class="p-2">Name</th>
+                                <th class="p-2">Age</th>
+                                <th class="p-2">Race</th>
+                                <th class="p-2">Gender</th>
+                                <th class="p-2">Position</th>
+                                <th class="p-2">Skills</th>
+                                <th class="p-2">Department</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% skillsData.forEach((result) => { %>
+                                <tr>
+                                    <td class="p-2"><%= result.name %></td>
+                                    <td class="p-2"><%= result.age %></td>
+                                    <td class="p-2"><%= result.race %></td>
+                                    <td class="p-2">
+                                        <% if(result.is_female == 0) {%>
+                                        Male 
+                                        <%} else { %> 
+                                            Female 
+                                        <%}%>
+                                    </td>
+                                    <td class="p-2"><%= result.position %></td>
+                                    <td class="p-2"><%= result.skills %></td>
+                                    <td class="p-2"><%= result.department %></td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<%- include('partials/footer.ejs'); %>
+		</div>
+
+        <!-- scripts for table -->
+        <script src="script/libs/tablefilter/tablefilter.js"></script>
+        <script src="script/global/sortable_table.js"></script>
+        <!-- scripts for skills-specific helpers -->
+        <script src="/script/helpers/skills_helpers.js"></script>
+        <!-- scripts for graph/wordcloud -->
+        <script src="/script/global/vis_functions.js"></script>
+        <script src="/script/global/graph_helpers.js"></script>
+        <script src="/script/charts/graph_skills.js"></script>
+        <!-- script for analysis table -->
+        <script src="/script/analysis/skills_analysis.js"></script>
+        <!-- script for export function -->
+        <script src="/script/global/export.js"></script>
+	</body>
+
+</html>
+ 
