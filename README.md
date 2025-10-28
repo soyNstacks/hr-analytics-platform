@@ -1,6 +1,6 @@
 # HR Analytics Platfrom | hr-analytics-platform
 
-A collaborative web application developed by a team of students using agile methodology. 
+A collaborative web application developed by a team of Year 1 students using agile methodology. 
 The platform, targeted at small Singapore-based organisations, was finalised after undergoing multiple iterations of prototyping with thorough market research, as well as surveys, interviews and user testing with HR executives/leaders, managers in SMEs, and data scientists. 
 
 ## Objectives
@@ -12,17 +12,6 @@ To create a webapp with the following:
   5) View raw data in a table and export to different file formats.
   6) Generate basic analysis with simple statistical techniques. 
   
-## Snippet
-### Home Page/Dashboard
-<img src="https://user-images.githubusercontent.com/84957027/194751288-631f9b75-f424-4cde-bc0b-ca1cec15a323.png" alt="home page (standard view)" width="80%"/>
-
-### Form Page | Payment category
-<img src="https://user-images.githubusercontent.com/84957027/194751330-f09779a3-2be5-49ff-b9cb-ac3ade04d133.png" alt="form for payment (standard view)" width="80%"/>
-
-### Visualisation Page | Payment, Pie chart
-<img src="https://user-images.githubusercontent.com/84957027/194751485-0e358104-c640-44e7-b05b-0587fad9d4f8.png" alt="pie chart for payment (standard view)" width="80%"/>
-
-## Install
 <b>Install external dependencies</b>
 ```
 npm init
